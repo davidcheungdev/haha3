@@ -24,7 +24,7 @@ jobs:
     - name: Check Namespace
       run: |
         DEPLOYMENT=${{ env.repo }}
-        NAMESPACE=$(echo "${{ github.repository }}"" | sed -e 's/.*\///g')
+        NAMESPACE=$(echo "${{ github.repository }}" | sed -e 's/.*\///g')
         echo "$NAMESPACE"
         exit 1
     - name: Run Unit Tests
