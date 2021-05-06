@@ -21,12 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Check Namespace
-      run: |
-        DEPLOYMENT=${{ env.repo }}
-        NAMESPACE=$(echo "${{ github.repository }}" | sed -e 's/.*\///g')
-        echo "$NAMESPACE"
-        exit 1
     - name: Run Unit Tests
       run: |
         echo "FIXME: Add unit tests"
@@ -91,7 +85,7 @@ jobs:
         - name: Check Namespace
           run: |
             DEPLOYMENT=${{ env.repo }}
-            NAMESPACE=$(echo "${{ github.repository }}"" | sed -e 's/.*\///g')
+            NAMESPACE=$(echo "${{ github.repository }}" | sed -e 's/.*\///g')
             echo "namespace=${NAMESPACE}" >> $GITHUB_ENV
             kubectl create namespace $NAMESPACE || echo "Namespace already exists"
         - name: Deploy image
