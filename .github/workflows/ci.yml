@@ -14,8 +14,7 @@ env:
   # Environment variables shared across jobs and doesn't change per environment
   region: ${{ secrets.AWS_DEFAULT_REGION }}
   accountId: ${{ secrets.AWS_ACCOUNT_ID }}
-  repo: ${{ github.repository }}
-  namespace: ${{ github.repository }}
+  repo: python-app
   cluster-name: ${{ secrets.EKS_CLUSTER_NAME }}
 jobs:
   unit-test:
@@ -86,7 +85,8 @@ jobs:
         - name: Check Namespace
           run: |
             DEPLOYMENT=${{ env.repo }}
-            NAMESPACE=${{ env.namespace }}
+            NAMESPACE=$(echo "${{ github.repository }}"" | sed -e 's/.*\///g')
+            echo "namespace=${NAMESPACE}" >> $GITHUB_ENV
             kubectl create namespace $NAMESPACE || echo "Namespace already exists"
         - name: Deploy image
           uses: ./.github/actions/deploy
